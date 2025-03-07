@@ -1,0 +1,35 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pgsql-backup-cron
+spec:
+  schedule: "*/1 * * * *"
+  successfulJobsHistoryLimit: 2
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: pgsql-backup-cron
+              image: pgsql-backup:0.0.1
+              env:
+                - name: PG_HOST
+                  value: 10.244.0.7
+                - name: PGPASSWORD
+                  value: admin
+                - name: PG_USER
+                  value: postgres
+                - name: PG_DATABASE
+                  value: pelican_db
+                - name: AWS_ACCESS_KEY_ID
+                  value: nVz4lm6SOE71eb7CuMvz
+                - name: AWS_SECRET_ACCESS_KEY
+                  value: 2Pb7e3yWYswJsM0qGvKZ10Lhq48bquICsB4kgEj8
+                - name: AWS_BUCKET_NAME
+                  value: pelican-db-backup
+                - name: AWS_HOST
+                  value: http://10.244.0.8:9000
+              imagePullPolicy: Never
