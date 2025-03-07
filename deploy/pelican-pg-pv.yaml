@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pelican-pg-pv
+  namespace: local
+spec:
+  capacity:
+    storage: 10Gi
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/local-path-provisioner/pelican-pg-pv"
+    type: DirectoryOrCreate
+
