@@ -14,6 +14,10 @@ primary:
         nodePorts:
             postgresql: 30125
 
+# Fix "mkdir: cannot create directory ‘/bitnami/postgresql/data’: Permission denied" exception in postgresql-0 pod
+volumePermissions:
+    enabled: true
+
 #    persistence:
 #        size: {{ env "POSTGRES_PV_SIZE" }}
 
