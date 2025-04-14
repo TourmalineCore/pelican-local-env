@@ -1,5 +1,25 @@
 # Pelican local env, AGPL-3.0 license
 
+replicaCount: 2
+
+updateStrategy:
+  rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+readinessProbe:
+  enabled: true
+  path: /cms
+  initialDelaySeconds: 15
+  periodSeconds: 30
+
+livenessProbe:
+  enabled: true
+  path: /cms
+  initialDelaySeconds: 45
+  periodSeconds: 60
+
+
 extraConfigMapEnvVars:
   HOST: "0.0.0.0"
   PORT: "1337"
