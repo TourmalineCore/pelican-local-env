@@ -5,7 +5,8 @@ updateStrategy:
   rollingUpdate:
       maxUnavailable: 1
       maxSurge: 1
-
+      
+# Here you can read more about container probes https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 readinessProbe:
   enabled: true
   path: /
