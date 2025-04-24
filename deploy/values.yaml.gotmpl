@@ -1,5 +1,18 @@
 # Pelican local env, AGPL-3.0 license
 
+image:
+  tag: "latest"
+
+# We set replicaCount to 1 and disable probes because we are using 2 replicas and probes at prod for rolling update
+# If we use 1 replica with enabled probes, then e2e tests fails for some reason
+replicaCount: 1
+
+livenessProbe: 
+  enabled: false
+
+readinessProbe: 
+  enabled: false
+
 ingress:
   hostname: "{{ .Values.hostname }}"
   annotations:
@@ -13,8 +26,3 @@ ingress:
 service:
   ports:
     http: 40110
-
-image:
-  tag: "latest"
-
-replicaCount: 1
