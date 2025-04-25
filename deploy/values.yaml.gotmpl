@@ -3,8 +3,8 @@
 image:
   tag: "latest"
 
-# We set replicaCount to 1 and disable probes because we are using 2 replicas and probes at prod for rolling update
-# If we use 1 replica with enabled probes, then e2e tests fails for some reason
+# We set replicaCount to 1, disable probes and leave rollingUpdate with void value because we are using 2 replicas, probes and configured rollingUpdate at prod for rolling update strategy
+# If we use 1 replica with enabled probes and configured rollingUpdate, then e2e tests fails for some reason
 replicaCount: 1
 
 livenessProbe: 
@@ -12,6 +12,9 @@ livenessProbe:
 
 readinessProbe: 
   enabled: false
+
+updateStrategy:
+  rollingUpdate: 
 
 ingress:
   hostname: "{{ .Values.hostname }}"
