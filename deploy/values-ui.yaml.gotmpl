@@ -1,5 +1,24 @@
 # Pelican local env, AGPL-3.0 license
 
+replicaCount: 2
+updateStrategy:
+  rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+      
+# Here you can read more about container probes https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+readinessProbe:
+  enabled: true
+  path: /
+  initialDelaySeconds: 15
+  periodSeconds: 30
+
+livenessProbe:
+  enabled: true
+  path: /
+  initialDelaySeconds: 45
+  periodSeconds: 60
+
 extraConfigMapEnvVars:
   API_URL: "http://pelican-cms-nginx:40110/api"
   PREVIEW_SECRET: "secret"
