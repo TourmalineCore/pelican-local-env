@@ -1,8 +1,19 @@
 # Pelican local env, AGPL-3.0 license
 
 image:
-  tag: "local-env-latest"
+  tag: "sha-be93c15b541982cd258f931b87bc98a0f694bb42"
+
+
+# Reference: https://github.com/nginx/kubernetes-ingress/issues/161#issuecomment-322224255
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location ~* /api/health-check {
+        deny all;
+        return 404;
+      }
 
 extraConfigMapEnvVars:
   API_URL: "http://pelican-cms-nginx:40110/api"
   PREVIEW_SECRET: "secret"
+
