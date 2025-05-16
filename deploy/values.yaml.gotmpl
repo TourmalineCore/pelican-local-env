@@ -1,5 +1,21 @@
 # Pelican local env, AGPL-3.0 license
 
+image:
+  tag: "latest"
+
+# We set replicaCount to 1, disable probes and leave rollingUpdate with void value because we are using 2 replicas, probes and configured rollingUpdate at prod for rolling update strategy
+# If we use 1 replica with enabled probes and configured rollingUpdate, then e2e tests fails for some reason
+replicaCount: 1
+
+livenessProbe: 
+  enabled: false
+
+readinessProbe: 
+  enabled: false
+
+updateStrategy:
+  rollingUpdate: 
+
 ingress:
   hostname: "{{ .Values.hostname }}"
   annotations:
