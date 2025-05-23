@@ -3,26 +3,13 @@
 image:
   tag: "latest"
 
-# We set replicaCount to 1, disable probes and leave rollingUpdate with void value because we are using 2 replicas, probes and configured rollingUpdate at prod for rolling update strategy
-# If we use 1 replica with enabled probes and configured rollingUpdate, then e2e tests fails for some reason
-replicaCount: 1
-
-livenessProbe: 
-  enabled: false
-
-readinessProbe: 
-  enabled: false
-
-updateStrategy:
-  rollingUpdate: 
-
 ingress:
   hostname: "{{ .Values.hostname }}"
   annotations:
     # to do not redirect from http to https
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     # the maximum allowed size of the client's request body
-    nginx.ingress.kubernetes.io/proxy-body-size: "30m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
     
   tls: false
 
