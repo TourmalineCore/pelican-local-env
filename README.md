@@ -139,7 +139,7 @@ kind load docker-image local-ui:0.0.1 --name pelican
 3. В *values-ui.yaml.gotmpl*  вставить:
 
 ```bash
-    image:
+image:
     registry: ""
     repository: "local-ui"
     tag: "0.0.1"
