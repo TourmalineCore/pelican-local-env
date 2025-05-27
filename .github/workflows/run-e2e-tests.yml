@@ -65,6 +65,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: TourmalineCore/pelican-cms
+        ref: feature/test_playwright_timeout
         path: pelican-cms
 
     - name: Playwright Run Against CMS
