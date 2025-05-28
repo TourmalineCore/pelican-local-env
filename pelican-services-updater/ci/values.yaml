@@ -1,0 +1,14 @@
+image:
+  registry: ""
+  repository: pelican-services-updater
+  pullPolicy: Never
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 512Mi
+  requests:
+    cpu: 1m
+    memory: 256Mi
+
+extraConfigMapEnvVars:

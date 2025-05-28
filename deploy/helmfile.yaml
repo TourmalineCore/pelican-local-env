@@ -107,3 +107,17 @@ releases:
       - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
       - values.yaml.gotmpl
       - values-pelican-db-backupper.yaml.gotmpl
+
+  - name: pelican-services-updater
+    labels:
+      app: pelican-services-updater
+    wait: true
+    chart: ../pelican-services-updater
+    needs: 
+      - minio-s3
+      - postgresql
+    values:
+      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+      - ./pelican-services-updater/ci/values.yaml
+      - values.yaml.gotmpl
+      - values-pelican-services-updater.yaml.gotmpl
