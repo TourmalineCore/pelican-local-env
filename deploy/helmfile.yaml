@@ -118,6 +118,6 @@ releases:
       - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - ./pelican-services-updater/ci/values.yaml
+      - ../pelican-services-updater/ci/values.yaml
       - values.yaml.gotmpl
       - values-pelican-services-updater.yaml.gotmpl
