@@ -9,7 +9,7 @@ spec:
   successfulJobsHistoryLimit: 1
   # We use concurrencyPolicy: Forbid to make sure that a new cronjob doesn't kill a previously started cronjob before it's completed
   # Here you can read about concurrencyPolicy: https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#concurrency-policy
-  concurrencyPolicy: Replace
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
@@ -22,14 +22,17 @@ spec:
               {{- else }}
               image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
               {{- end }}
-              resources:
-                limits:
-                  cpu: {{ .Values.resources.limits.cpu }}
-                  memory: {{ .Values.resources.limits.memory }}
-                requests:
-                  cpu: {{ .Values.resources.requests.cpu }}
-                  memory: {{ .Values.resources.requests.memory }}
+              securityContext:
+                privileged: true
+              # resources:
+              #   limits:
+              #     cpu: {{ .Values.resources.limits.cpu }}
+              #     memory: {{ .Values.resources.limits.memory }}
+              #   requests:
+              #     cpu: {{ .Values.resources.requests.cpu }}
+              #     memory: {{ .Values.resources.requests.memory }}
               env:
                 - name: DB_BACKUPS_FILENAME_PREFIX
                   value: {{ .Values.extraConfigMapEnvVars.DB_BACKUPS_FILENAME_PREFIX }}
               imagePullPolicy: {{ .Values.image.pullPolicy }}
+          hostNetwork: true
