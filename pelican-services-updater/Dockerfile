@@ -42,8 +42,12 @@ RUN npm install -g @devcontainers/cli
 
 # COPY devcontainer.json /app/.devcontainer/
 COPY devcontainer.json .devcontainer/
+COPY .pelican-cluster-kubeconfig .
+COPY .pelican-cluster-kubeconfig ./workspaces/
 
-CMD sleep 1200000
+# CMD sleep 1200000
+
+# CMD docker ps
 
 # CMD devcontainer up --workspace-folder . --log-level trace
 

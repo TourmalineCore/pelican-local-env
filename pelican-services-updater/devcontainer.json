@@ -51,7 +51,7 @@
 	],
 	// this tells kind where to look for the default config
 	"containerEnv": {
-		"KUBECONFIG": "/workspaces/pelican-local-env/.pelican-cluster-kubeconfig"
+		"KUBECONFIG": "/workspaces/.pelican-cluster-kubeconfig"
 	},
 	// this is to prevent the k8s cluster container from pausing when closing VSCode
 	"shutdownAction": "none"
