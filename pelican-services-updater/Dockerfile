@@ -53,3 +53,5 @@ COPY .pelican-cluster-kubeconfig ./workspaces/
 
 # Simple solution how to up docker daemon: https://forums.docker.com/t/docker-in-docker-not-running-when-using-official-docker-dind-image/111891/8
 # docker run -d -p 22:22 -v /var/run/docker.sock:/var/run/docker.sock pelican-services-updater:0.0.1
+
+# to access cluster inside of devcontainer change cluster url in .pelican-cluster-kubeconfig to internal https://pelican-control-plane:6443
