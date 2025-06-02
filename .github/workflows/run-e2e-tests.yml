@@ -31,9 +31,9 @@ jobs:
         ref: test/e2e-test
       
     - name: Test db backupper
+      env:
+        DB_BACKUPS_FILENAME_PREFIX: ${{ secrets.PELICAN_DB_BACKUPS_FILENAME_PREFIX }}
       run: |
-        echo "DB_BACKUPS_FILENAME_PREFIX: $DB_BACKUPS_FILENAME_PREFIX"
-        echo "PELICAN_DB_BACKUPS_FILENAME_PREFIX: $PELICAN_DB_BACKUPS_FILENAME_PREFIX"
         python pgsql-dump.py
         python e2e_test.py
 
