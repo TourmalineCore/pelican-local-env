@@ -90,3 +90,16 @@ jobs:
         name: html-report--attempt-${{ github.run_attempt }}
         path: pelican-cms/playwright-report
         retention-days: 7
+
+    # DB BACKUPPER TESTS
+
+    - name: Checkout Pelican DB Backupper
+      uses: actions/checkout@v4
+      with:
+        repository: TourmalineCore/pelican-db-backupper
+        ref: test/e2e-test
+      
+    - name: Test db backupper
+      run: |
+        python pgsql-dump.py
+        python e2e_test.py
