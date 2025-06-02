@@ -32,6 +32,8 @@ jobs:
       
     - name: Test db backupper
       run: |
+        echo "DB_BACKUPS_FILENAME_PREFIX: $DB_BACKUPS_FILENAME_PREFIX"
+        echo "PELICAN_DB_BACKUPS_FILENAME_PREFIX: $PELICAN_DB_BACKUPS_FILENAME_PREFIX"
         python pgsql-dump.py
         python e2e_test.py
 
