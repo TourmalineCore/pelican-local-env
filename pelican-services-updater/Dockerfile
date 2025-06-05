@@ -1,12 +1,40 @@
-FROM node:24.1.0-alpine AS node
+FROM ubuntu:24.04
 
-FROM docker:dind
+# install curl
+RUN apt-get update && apt-get install curl -y
 
-# from https://stackoverflow.com/a/76132347
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
+# install git
+RUN apt-get install git -y
+
+# install kind
+RUN [ $(uname -m) = x86_64 ] && curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.29.0/kind-linux-amd64 && chmod +x /usr/local/bin/kind
+
+# install helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
+    chmod 700 get_helm.sh && \
+    ./get_helm.sh
+
+# install helm-diff plugin
+RUN helm plugin install https://github.com/databus23/helm-diff --version=3.9.6
+
+# install helm-git plugin
+RUN helm plugin install https://github.com/aslafy-z/helm-git --version 1.3.0
+
+# install helmfile
+RUN curl -L https://github.com/helmfile/helmfile/releases/download/v0.157.0/helmfile_0.157.0_linux_amd64.tar.gz | tar xz && \
+    chmod +x helmfile && \
+    mv helmfile /usr/local/bin
+
+# install kubectl
+COPY --from=bitnami/kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/kubectl
+
+# RUN git clone https://github.com/TourmalineCore/pelican-local-env.git
+
+# CMD sleep 120000
+
+CMD git clone https://github.com/TourmalineCore/pelican-local-env.git && \
+    helmfile cache cleanup && helmfile --environment local --namespace local -f pelican-local-env/deploy/helmfile.yaml apply
+ 
 
 # WORKDIR /app
 
@@ -36,13 +64,6 @@ COPY --from=node /usr/local/bin /usr/local/bin
 # ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/bin
 # ENV PATH $NODE_PATH:$PATH
 
-RUN node -v
-
-RUN npm install -g @devcontainers/cli
-
-# COPY devcontainer.json /app/.devcontainer/
-COPY devcontainer.json .devcontainer/
-COPY .pelican-cluster-kubeconfig .
 # CMD sleep 1200000
 
 # CMD docker ps
