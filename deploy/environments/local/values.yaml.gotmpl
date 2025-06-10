@@ -13,6 +13,9 @@ PELICAN_AWS_BUCKET: "pelican-local-env"
 PELICAN_AWS_SUBFOLDER_NAME: ""
 PELICAN_AWS_REGION: "us-east-1"
 
+# synchronize services everyday at 5:00 a.m. by Chelyabinsk local time (which is UTC+5)
+PELICAN_SYNCHRONIZER_SCHEDULE: "0 0 * * *"
+
 # make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
 # we expect no one to make changes at that time
 PELICAN_BACKUPS_SCHEDULE: "0 19 * * *"
