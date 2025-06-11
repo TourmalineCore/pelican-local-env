@@ -1,0 +1,29 @@
+name: Update UI image tag
+on: 
+  repository_dispatch:
+
+jobs:
+  Update-UI-image-tag:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Local Env  
+        uses: actions/checkout@v3 
+
+      - name: Write new UI image tag to values
+        run: |
+          cp deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy
+          yq . deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.1
+          yq ".image.tag =\"locan-env-sha-${{ github.event.client_payload.sha }}\"" deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.2
+          diff deploy/values-ui.yaml.gotmpl.1 deploy/values-ui.yaml.gotmpl.2 > deploy/values-ui.yaml.gotmpl.diff || true
+          patch -o deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy < deploy/values-ui.yaml.gotmpl.diff
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Workflow"
+          git config --global user.email "$Workflow@tourmalinecore.com"
+      
+          git add deploy/values-ui.yaml.gotmpl
+  
+          git commit -m "${{ github.event.client_payload.commit_message }}"
+          
+          git push
