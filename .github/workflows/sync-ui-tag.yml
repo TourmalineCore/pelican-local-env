@@ -17,13 +17,13 @@ jobs:
           diff deploy/values-ui.yaml.gotmpl.1 deploy/values-ui.yaml.gotmpl.2 > deploy/values-ui.yaml.gotmpl.diff || true
           patch -o deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy < deploy/values-ui.yaml.gotmpl.diff
 
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "Workflow"
-          git config --global user.email "$Workflow@tourmalinecore.com"
+      # - name: Commit and Push Changes
+      #   run: |
+      #     git config --global user.name "Workflow"
+      #     git config --global user.email "$Workflow@tourmalinecore.com"
       
-          git add deploy/values-ui.yaml.gotmpl
+      #     git add deploy/values-ui.yaml.gotmpl
   
-          git commit -m "${{ github.event.client_payload.commit_message }}"
+      #     git commit -m "${{ github.event.client_payload.commit_message }}"
           
-          git push
+      #     git push
