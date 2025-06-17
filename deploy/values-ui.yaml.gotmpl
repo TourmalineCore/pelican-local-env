@@ -5,7 +5,7 @@ image:
 
 extraConfigMapEnvVars:
   API_URL: "http://pelican-cms-nginx:40110/api"
-  PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}"
+  PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}" 
 
   CSP_ENABLED: "{{ .Values.PELICAN_CSP_ENABLED }}"
   CSP_SCRIPT_SRC_URLS: "{{ .Values.PELICAN_CSP_SCRIPT_SRC_URLS }}"
