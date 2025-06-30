@@ -1,10 +1,10 @@
-# Pelican local env, AGPL-3.0 license
-
+# Pelican local env, AGPL-3.0 licenses
 
 image:
   tag: "latest"
 
 ingress:
+  ingressClassName: "pelican-ingress-nginx"
   hostname: "{{ .Values.hostname }}"
   annotations:
     # to do not redirect from http to https

@@ -11,14 +11,14 @@ repositories:
     url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
 
 environments:
-  local:
+  pelican:
     values:
       - environments/{{ .Environment.Name }}/values.yaml.gotmpl
 
 releases:
-  - name: ingress-nginx
+  - name: pelican-ingress-nginx
     labels:
-      app: ingress-nginx
+      app: pelican-ingress-nginx
     wait: true
     chart: ingress-nginx/ingress-nginx
     # update ingress-nginx version to 1.12.1 for fix CVE-2025-1098
@@ -56,7 +56,7 @@ releases:
     # it won't work anyway until ingress controller is created
     # thus we wait for it to be ready first
     needs: 
-      - ingress-nginx
+      - pelican-ingress-nginx
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref={{ env "PELICAN_UI_BRANCH" | default "master" }}
@@ -73,7 +73,7 @@ releases:
     # it won't work anyway until ingress controller is created
     # thus we wait for it to be ready first
     needs: 
-      - ingress-nginx
+      - pelican-ingress-nginx
       - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files

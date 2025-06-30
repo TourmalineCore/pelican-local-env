@@ -31,7 +31,7 @@
 Чтобы создать новый кластер, в котором вы будете работать, выполните следующую команду **один раз**:
 
 ```bash
-kind create cluster --name pelican --config kind-local-config.yaml --kubeconfig ./.pelican-cluster-kubeconfig
+kind create cluster --name local-envs --config kind-local-config.yaml --kubeconfig ./.pelican-cluster-kubeconfig
 ```
 
 ### Удаление кластера
@@ -54,10 +54,10 @@ kind delete cluster --name pelican
 Чтобы развернуть приложение в кластере в первый раз или для повторного развертывания после изменения helm-чартов или их конфигурации, выполните следующую команду:
 
 ```bash
-helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
+helmfile cache cleanup && helmfile --environment pelican --namespace pelican -f deploy/helmfile.yaml apply
 ```
 
-Когда команда будет выполнена и все модули k8s будут запущены во вкладке **`local`**, вы сможете перейти по ссылке http://localhost:40110/ в вашем браузере и увидеть `Hello World`.
+Когда команда будет выполнена и все модули k8s будут запущены во вкладке **`pelican`**, вы сможете перейти по ссылке http://localhost:40110/ в вашем браузере и увидеть `Hello World`.
 
 >Примечание: в первый раз это можеть занять довольно большое количество времени.
 
@@ -71,7 +71,7 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 Чтобы увидеть, как будут выглядеть все чарт-манифесты перед применением, вы можете выполнить следующую команду:
 
 ```bash
-helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml template
+helmfile cache cleanup && helmfile --environment pelican --namespace pelican -f deploy/helmfile.yaml template
 ```
 
 ## URLs всех сервисов
@@ -93,7 +93,7 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
     - `password`: *admin*
 
 ## Возможные проблемы
-- OpenLens не показывает никаких развернутых модулей. Убедитесь, что для параметра "Namespace" в поле "Workloads" задано значение "`local`" или "`All namespaces`".
+- OpenLens не показывает никаких развернутых модулей. Убедитесь, что для параметра "Namespace" в поле "Workloads" задано значение "`pelican`" или "`All namespaces`".
 
 - не открывается http://localhost:40110/
     ```
