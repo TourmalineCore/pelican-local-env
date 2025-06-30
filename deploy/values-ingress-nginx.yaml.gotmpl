@@ -4,13 +4,17 @@
 # here you can find the default values.yaml that we partially override in this file https://github.com/kubernetes/ingress-nginx/blob/helm-chart-4.10.1/charts/ingress-nginx/values.yaml
 
 controller:
+  ingressClass: pelican-ingress-nginx
+  ingressClassResource:
+    name: pelican-ingress-nginx
+    controllerValue: "k8s.io/pelican-ingress-nginx"
   service:
     type: NodePort
     ports:
       # -- Port the external HTTP listener is published with.
       http: "40110"
     nodePorts:
-      http: "30080"
+      http: "30070"
       https: 
   # not needed in this setup
   admissionWebhooks:

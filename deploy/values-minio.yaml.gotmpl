@@ -10,12 +10,12 @@ defaultBuckets: pelican-local-env, pelican-backups
 
 ingress:
   enabled: true
-  ingressClassName: "nginx"
+  ingressClassName: "pelican-ingress-nginx"
   hostname: minio-s3-console.{{ .Values.hostname }}
   path: /
 
 apiIngress:
   enabled: true
-  ingressClassName: "nginx"
+  ingressClassName: "pelican-ingress-nginx"
   hostname: minio-s3.{{ .Values.hostname }}
   path: /
