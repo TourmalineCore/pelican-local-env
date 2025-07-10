@@ -27,81 +27,81 @@ releases:
     values:
       - values-ingress-nginx.yaml.gotmpl
 
-  # - name: postgresql
-  #   namespace: default
-  #   labels:
-  #     app: postgresql
-  #   wait: true
-  #   chart: bitnami/postgresql
-  #   version: 12.2.7
-  #   values:
-  #     - values-postgre.yaml.gotmpl
+  - name: postgresql
+    namespace: default
+    labels:
+      app: postgresql
+    wait: true
+    chart: bitnami/postgresql
+    version: 12.2.7
+    values:
+      - values-postgre.yaml.gotmpl
 
-  # - name: minio-s3
-  #   labels:
-  #     app: minio-s3
-  #   wait: true
-  #   chart: bitnami/minio
-  #   version: 14.8.5
-  #   values: 
-  #     - values-minio.yaml.gotmpl
+  - name: minio-s3
+    labels:
+      app: minio-s3
+    wait: true
+    chart: bitnami/minio
+    version: 14.8.5
+    values: 
+      - values-minio.yaml.gotmpl
 
-  # - name: pelican-ui
-  #   labels:
-  #     app: pelican-ui
-  #   wait: true
-  #   chart: bitnami/nginx
-  #   # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
-  #   version: 15.3.5
-  #   # it won't work anyway until ingress controller is created
-  #   # thus we wait for it to be ready first
-  #   needs: 
-  #     - ingress-nginx
-  #   values:
-  #     # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-  #     - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref={{ env "PELICAN_UI_BRANCH" | default "master" }}
-  #     - values.yaml.gotmpl
-  #     - values-ui.yaml.gotmpl
+  - name: pelican-ui
+    labels:
+      app: pelican-ui
+    wait: true
+    chart: bitnami/nginx
+    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
+    version: 15.3.5
+    # it won't work anyway until ingress controller is created
+    # thus we wait for it to be ready first
+    needs: 
+      - ingress-nginx
+    values:
+      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref={{ env "PELICAN_UI_BRANCH" | default "master" }}
+      - values.yaml.gotmpl
+      - values-ui.yaml.gotmpl
 
-  # - name: pelican-cms
-  #   labels:
-  #     app: pelican-cms
-  #   wait: true
-  #   chart: bitnami/nginx
-  #   # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
-  #   version: 15.3.5
-  #   # it won't work anyway until ingress controller is created
-  #   # thus we wait for it to be ready first
-  #   needs: 
-  #     - ingress-nginx
-  #     - postgresql
-  #   values:
-  #     # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-  #     - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref={{ env "PELICAN_CMS_BRANCH" | default "master" }}
-  #     - values.yaml.gotmpl
-  #     - values-cms.yaml.gotmpl
+  - name: pelican-cms
+    labels:
+      app: pelican-cms
+    wait: true
+    chart: bitnami/nginx
+    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
+    version: 15.3.5
+    # it won't work anyway until ingress controller is created
+    # thus we wait for it to be ready first
+    needs: 
+      - ingress-nginx
+      - postgresql
+    values:
+      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+      - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref={{ env "PELICAN_CMS_BRANCH" | default "master" }}
+      - values.yaml.gotmpl
+      - values-cms.yaml.gotmpl
 
-  # - name: pelican-s3-backupper
-  #   labels:
-  #     app: pelican-s3-backupper
-  #   wait: true
-  #   chart: pelican-s3-backupper/pelican-s3-backupper
-  #   needs: 
-  #     - minio-s3
-  #   values:
-  #     # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-  #     - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}
-  #     - values.yaml.gotmpl
-  #     - values-pelican-s3-backupper.yaml.gotmpl
+  - name: pelican-s3-backupper
+    labels:
+      app: pelican-s3-backupper
+    wait: true
+    chart: pelican-s3-backupper/pelican-s3-backupper
+    needs: 
+      - minio-s3
+    values:
+      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}
+      - values.yaml.gotmpl
+      - values-pelican-s3-backupper.yaml.gotmpl
 
   - name: pelican-db-backupper
     labels:
       app: pelican-db-backupper
     wait: true
     chart: pelican-db-backupper/pelican-db-backupper
-    # needs: 
-    #   - minio-s3
-    #   - postgresql
+    needs: 
+      - minio-s3
+      - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
