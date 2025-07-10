@@ -27,24 +27,24 @@ releases:
     values:
       - values-ingress-nginx.yaml.gotmpl
 
-  - name: postgresql
-    namespace: default
-    labels:
-      app: postgresql
-    wait: true
-    chart: bitnami/postgresql
-    version: 12.2.7
-    values:
-      - values-postgre.yaml.gotmpl
+  # - name: postgresql
+  #   namespace: default
+  #   labels:
+  #     app: postgresql
+  #   wait: true
+  #   chart: bitnami/postgresql
+  #   version: 12.2.7
+  #   values:
+  #     - values-postgre.yaml.gotmpl
 
-  - name: minio-s3
-    labels:
-      app: minio-s3
-    wait: true
-    chart: bitnami/minio
-    version: 14.8.5
-    values: 
-      - values-minio.yaml.gotmpl
+  # - name: minio-s3
+  #   labels:
+  #     app: minio-s3
+  #   wait: true
+  #   chart: bitnami/minio
+  #   version: 14.8.5
+  #   values: 
+  #     - values-minio.yaml.gotmpl
 
   # - name: pelican-ui
   #   labels:
