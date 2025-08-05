@@ -25,8 +25,8 @@ jobs:
           # Example of PATH_TO_HELMFILE: deploy/helmfile.yaml
           echo "PATH_TO_HELMFILE=${{ github.event.client_payload.path_to_helmfile }}" >> $GITHUB_ENV
 
-      # Double quotas in multiline commit message breaks sync workflow
-      # It's necessary to write commit message to file as json to correctly process double quotas that breaks sync workflow
+      # double quotes and new lines in multiline commit message breaks the sync workflow
+      # using json to file trick that replaces double quotes and new lines with \" and \n
       # -e is used to enable interpretation of the following backslash escapes (e.g \n)
       - name: Write commit message to file
         run: 
