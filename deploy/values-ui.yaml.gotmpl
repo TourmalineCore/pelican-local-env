@@ -7,6 +7,9 @@ image:
   tag: "local-env-sha-2cc831e3f211d0dbdd49162b9931a23d545dffb3"
 # —— END —— #
 
+# it is enough for local-env
+replicaCount: 1
+
 extraConfigMapEnvVars:
   API_URL: "http://pelican-cms-nginx:40110/api"
   PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}"
