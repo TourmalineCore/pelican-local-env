@@ -5,6 +5,8 @@ repositories:
     url: https://mirror.yandex.ru/helm/charts.bitnami.com
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
+  - name: metrics-server
+    url: https://kubernetes-sigs.github.io/metrics-server
   - name: pelican-s3-backupper
     url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref=9338eb238a0daa3fd060b9bb6c945f6a9256a98c
   - name: pelican-db-backupper
@@ -47,6 +49,15 @@ releases:
     version: 14.8.5
     values: 
       - values-minio.yaml.gotmpl
+
+  - name: metrics-server
+    labels:
+      app: metrics-server
+    wait: true
+    chart: metrics-server/metrics-server
+    version: 3.13.0
+    values:
+      - values-metrics-server.yaml.gotmpl 
 
   - name: pelican-ui
     labels:

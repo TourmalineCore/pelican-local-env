@@ -151,3 +151,11 @@ image:
 ```bash
 helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
 ```
+
+## Мониторинг потребления ресурсов
+
+Чтобы увидеть, сколько ресурсов потребляется сервисами, вы можете выполнить следующую команду:
+
+```bash
+kubectl top pods --namespace local
+```
