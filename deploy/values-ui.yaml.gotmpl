@@ -10,7 +10,7 @@ image:
 extraConfigMapEnvVars:
   CMS_URL: "http://pelican-cms-nginx:40110"
   API_URL: "http://pelican-cms-nginx:40110/api"
-  FRONTEND_URL: "http://pelican-ui-nginx:40110"
+  FRONTEND_URL: "{{ .Values.baseExternalUrl }}"
 
   CMS_EMAIL: "{{ .Values.PELICAN_CMS_EMAIL }}"
   CMS_PASSWORD: "{{ .Values.PELICAN_CMS_PASSWORD }}"
