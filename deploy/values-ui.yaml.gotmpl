@@ -12,8 +12,8 @@ extraConfigMapEnvVars:
   API_URL: "http://pelican-cms-nginx:40110/api"
   FRONTEND_URL: "http://pelican-ui-nginx:40110"
 
-  CMS_EMAIL: `admin@init-strapi-admin.strapi.io`
-  CMS_PASSWORD: `admin`
+  CMS_EMAIL: "{{ .Values.PELICAN_CMS_EMAIL }}"
+  CMS_PASSWORD: "{{ .Values.PELICAN_CMS_PASSWORD }}"
 
   PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}"
 
