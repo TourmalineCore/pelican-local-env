@@ -19,3 +19,19 @@ extraConfigMapEnvVars:
   CSP_MEDIA_SRC_URLS: "{{ .Values.PELICAN_CSP_MEDIA_SRC_URLS }}"
   CSP_FRAME_SRC_URLS: "{{ .Values.PELICAN_CSP_FRAME_SRC_URLS }}"
   CSP_CONNECT_SRC_URLS: "{{ .Values.PELICAN_CSP_CONNECT_SRC_URLS }}"
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_cache static-cache;
+      proxy_cache_key "$scheme$request_method$host$request_uri";
+      proxy_cache_valid 404 1m;
+      proxy_cache_valid 200 5m;
+      proxy_cache_use_stale error timeout updating http_404 http_500 http_502 http_503 http_504;
+      proxy_cache_bypass $http_x_purge;
+      proxy_ignore_headers Cache-Control;
+      add_header X-Cache-Status-Be $upstream_cache_status;
+      add_header X-Cache-Status Test;
+      add_header X-Request-Uri $request_uri;

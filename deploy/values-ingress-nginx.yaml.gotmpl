@@ -4,6 +4,7 @@
 # here you can find the default values.yaml that we partially override in this file https://github.com/kubernetes/ingress-nginx/blob/helm-chart-4.10.1/charts/ingress-nginx/values.yaml
 
 controller:
+  allowSnippetAnnotations: true
   service:
     type: NodePort
     ports:
@@ -18,5 +19,10 @@ controller:
 
   config:
     # https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/configmap.md#proxy-body-size
-    proxy-body-size: "100m" 
+    proxy-body-size: "100m"
+    annotations-risk-level: Critical
+    http-snippet: |
+      proxy_cache_path /tmp/nginx-cache levels=1:2 keys_zone=static-cache:2m max_size=100m inactive=7d use_temp_path=off;
+      proxy_cache_lock on;
+      proxy_cache_use_stale updating;
 
