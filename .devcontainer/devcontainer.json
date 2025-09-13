@@ -30,7 +30,8 @@
 			"yqVersion": "4.45.1",
 			"gojqVersion": "none",
 			"xqVersion": "none"
-		}
+		},
+		"ghcr.io/devcontainers/features/node:1":{}
 	},
 	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
