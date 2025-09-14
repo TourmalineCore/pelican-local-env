@@ -1,5 +1,6 @@
 export function printJmeterReport({
     pageName,
+    min,
     max,
     avg,
     p95,
@@ -10,6 +11,7 @@ export function printJmeterReport({
     totalMB
 }: {
     pageName: string,
+    min: number,
     max: number,
     avg: number,
     p95: number,
@@ -20,6 +22,7 @@ export function printJmeterReport({
     totalMB: string 
 }) {
     console.log(`📊${pageName} Load Tests Report (Jmeter): \n
+        ⏱ Min response: ${min}ms \n
         ⏱ Max response: ${max}ms \n
         ⏱ Average response time: ${avg}ms \n
         ⏱ 95th percentile: ${p95}ms \n

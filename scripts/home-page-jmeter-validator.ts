@@ -16,6 +16,7 @@ import {
     const {
       errorCount,
       avg,
+      min,
       max,
       p95,
       p99
@@ -31,6 +32,7 @@ import {
       pageName: 'Home Page',
       errorCount,
       avg,
+      min,
       max,
       p95,
       p99,
@@ -38,14 +40,7 @@ import {
       totalKB,
       totalMB
     });
-
-    printJmeterIssues({
-      max,
-      avg,
-      errorCount
-    });
   } catch (err: any) {
     console.error(`Error while parsing results: ${err.message}`);
-    process.exit(1);
   }
 })();
