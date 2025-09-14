@@ -92,3 +92,20 @@ jobs:
         name: html-report--attempt-${{ github.run_attempt }}
         path: pelican-cms/playwright-report
         retention-days: 7
+
+    # DB BACKUPPER E2E TESTS
+
+    - name: Checkout Pelican DB backupper
+      uses: actions/checkout@v4
+      with:
+        repository: TourmalineCore/pelican-db-backupper
+        path: pelican-db-backupper
+
+    - name: Run DB backupper E2E tests
+      run: python e2e-tests.py
+      env: 
+        DB_AWS_ACCESS_KEY_ID: admin
+        DB_AWS_SECRET_ACCESS_KEY: rootPassword
+        DB_AWS_ENDPOINT: http://minio-s3.localhost:40110
+        DB_AWS_BUCKET_NAME: pelican-backups
+        DB_BACKUPS_FILENAME_PREFIX: pelican-local-env-db
