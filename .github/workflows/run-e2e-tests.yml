@@ -18,6 +18,10 @@ jobs:
       with:
         runCmd: |
           kind create cluster --name pelican --config kind-local-config.yaml --kubeconfig ./.pelican-cluster-kubeconfig
+
+          # we need to overrive backup schedule of backupper inside local-env to run cronjob every minute 
+          sed -i "0,/BACKUPS_SCHEDULE:.*/s//BACKUPS_SCHEDULE: \"*\/1 * * * *\"/" deploy/values-pelican-db-backupper.yaml.gotmpl
+
           helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
         # we don't need to push docker image that was built using our Dev Container
         push: never
