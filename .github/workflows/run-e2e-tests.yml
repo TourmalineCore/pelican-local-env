@@ -102,7 +102,7 @@ jobs:
         path: pelican-db-backupper
 
     - name: Run DB backupper E2E tests
-      run: python e2e-tests.py
+      run: python ./pelican-db-backupper/e2e-tests.py
       env: 
         DB_AWS_ACCESS_KEY_ID: admin
         DB_AWS_SECRET_ACCESS_KEY: rootPassword
