@@ -8,11 +8,11 @@ repositories:
   - name: metrics-server
     url: https://kubernetes-sigs.github.io/metrics-server
   - name: pelican-s3-backupper
-    url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref=9338eb238a0daa3fd060b9bb6c945f6a9256a98c
+    url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref=master
   - name: pelican-db-backupper
-    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref=7460d187fde973e0d80d330153aecabfeb623a3c
+    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref=master
   - name: pelican-env-synchronizer
-    url: git+https://github.com/TourmalineCore/pelican-env-synchronizer.git?ref=c94ebe494cee16a466038cb4dd70344d38872b66
+    url: git+https://github.com/TourmalineCore/pelican-env-synchronizer.git?ref=master
 
 environments:
   local:
@@ -72,7 +72,7 @@ releases:
       - ingress-nginx
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=bb411c92e7a45de1904a80cd1ddb2379c740b85f
+      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
       - values-ui.yaml.gotmpl
 
@@ -90,7 +90,7 @@ releases:
       - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref=b995d6cc2fd483d2b5c3956fa2b6e90ff875ea88
+      - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
       - values-cms.yaml.gotmpl
 
@@ -103,7 +103,7 @@ releases:
       - minio-s3
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref=9338eb238a0daa3fd060b9bb6c945f6a9256a98c
+      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
       - values-pelican-s3-backupper.yaml.gotmpl
 
@@ -117,7 +117,7 @@ releases:
       - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=7460d187fde973e0d80d330153aecabfeb623a3c
+      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
       - values-pelican-db-backupper.yaml.gotmpl
 
@@ -128,6 +128,6 @@ releases:
     chart: pelican-env-synchronizer/pelican-env-synchronizer
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-env-synchronizer.git@/ci/values.yaml?ref=c94ebe494cee16a466038cb4dd70344d38872b66
+      - git::https://github.com/TourmalineCore/pelican-env-synchronizer.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
       - values-pelican-env-synchronizer.yaml.gotmpl
