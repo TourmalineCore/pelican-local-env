@@ -6,7 +6,7 @@ kubectl exec postgresql-0 -n local -- env PGPASSWORD=admin psql -U postgres -c "
 
 kubectl exec postgresql-0 -n local -- env PGPASSWORD=admin psql -U postgres -c "create database pelican_db;"
 
-kubectl cp pelican-local-env-db-2025-09-01T06-06-03.backup -n local postgresql-0:tmp/pelican.backup 
+kubectl cp pelican-local-env-db-2025-08-26T04-52-54.backup -n local postgresql-0:tmp/pelican.backup 
 
 kubectl exec postgresql-0 -n local -- env PGPASSWORD=admin psql -U postgres -d pelican_db -f tmp/pelican.backup
 
