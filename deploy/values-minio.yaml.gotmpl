@@ -3,6 +3,9 @@
 # here you can find the readme of the config of the used version of minio chart https://github.com/bitnami/charts/blob/main/bitnami/minio/README.md
 # here you can find the default values.yaml that we partially override in this file https://github.com/bitnami/charts/blob/main/bitnami/minio/values.yaml
 
+image:
+    repository: bitnamilegacy/minio
+
 auth:
   rootPassword: "{{ .Values.PELICAN_AWS_ACCESS_SECRET_KEY }}"
 
