@@ -60,8 +60,8 @@ jobs:
           FRONTEND_URL=http://localhost:40110 
           API_URL=http://localhost:40110/cms/api
           CMS_URL=http://localhost:40110/cms
-          CMS_EMAIL: admin@init-strapi-admin.strapi.io
-          CMS_PASSWORD: admin
+          CMS_EMAIL=admin@init-strapi-admin.strapi.io
+          CMS_PASSWORD=admin
           CI
 
     - name: Upload HTML report
