@@ -59,6 +59,7 @@ jobs:
           PLAYWRIGHT_HTML_OPEN=never
           FRONTEND_URL=http://localhost:40110 
           API_URL=http://localhost:40110/cms/api
+          CMS_URL=http://localhost:40110/cms
           CI
 
     - name: Upload HTML report
