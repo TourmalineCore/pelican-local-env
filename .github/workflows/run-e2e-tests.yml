@@ -18,6 +18,11 @@ jobs:
       with:
         runCmd: |
           kind create cluster --name pelican --config kind-local-config.yaml --kubeconfig ./.pelican-cluster-kubeconfig
+
+          # we need to overrive backup schedule of backuppers inside local-env to run cronjob every minute 
+          sed -i "0,/BACKUPS_SCHEDULE:.*/s//BACKUPS_SCHEDULE: \"*\/1 * * * *\"/" deploy/values-pelican-db-backupper.yaml.gotmpl
+          sed -i "0,/BACKUPS_SCHEDULE:.*/s//BACKUPS_SCHEDULE: \"*\/1 * * * *\"/" deploy/values-pelican-s3-backupper.yaml.gotmpl
+          
           helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
         # we don't need to push docker image that was built using our Dev Container
         push: never
@@ -54,6 +59,9 @@ jobs:
           PLAYWRIGHT_HTML_OPEN=never
           FRONTEND_URL=http://localhost:40110 
           API_URL=http://localhost:40110/cms/api
+          CMS_URL=http://localhost:40110/cms
+          CMS_EMAIL=admin@init-strapi-admin.strapi.io
+          CMS_PASSWORD=admin
           CI
 
     - name: Upload HTML report
@@ -92,3 +100,52 @@ jobs:
         name: html-report--attempt-${{ github.run_attempt }}
         path: pelican-cms/playwright-report
         retention-days: 7
+
+    # DB BACKUPPER E2E TESTS
+
+    - name: Checkout Pelican DB backupper
+      uses: actions/checkout@v4
+      with:
+        repository: TourmalineCore/pelican-db-backupper
+        path: pelican-db-backupper
+
+    - name: Run DB backupper E2E tests
+      run: python ./pelican-db-backupper/e2e-tests.py
+      env: 
+        DB_AWS_ACCESS_KEY_ID: admin
+        DB_AWS_SECRET_ACCESS_KEY: rootPassword
+        DB_AWS_ENDPOINT: http://minio-s3.localhost:40110
+        DB_AWS_BUCKET_NAME: pelican-backups
+        DB_BACKUPS_FILENAME_PREFIX: pelican-local-env-db
+
+    # S3 BACKUPPER E2E TESTS
+    - name: Write creds for aws tool 
+      run: |
+        mkdir ~/.aws
+        echo "[default]" | tee ~/.aws/credentials             
+        echo "aws_access_key_id = admin" | tee -a ~/.aws/credentials             
+        echo "aws_secret_access_key = rootPassword" | tee -a ~/.aws/credentials
+
+    - name: Upload test file to S3
+      run: |
+        echo "test" > test.txt
+        aws --endpoint-url http://minio-s3.localhost:40110 s3 cp ./test.txt s3://pelican-local-env
+        
+    # Wait 60 seconds to make sure that backup was created
+    - name: Wait 60 seconds
+      run: sleep 60
+
+    - name: Checkout Pelican S3 backupper
+      uses: actions/checkout@v4
+      with:
+        repository: TourmalineCore/pelican-s3-backupper
+        path: pelican-s3-backupper
+
+    - name: Run S3 backupper E2E tests
+      run: python ./pelican-s3-backupper/e2e-tests.py
+      env: 
+        S3_AWS_ACCESS_KEY_ID: admin
+        S3_AWS_SECRET_ACCESS_KEY: rootPassword
+        S3_AWS_ENDPOINT: http://minio-s3.localhost:40110
+        S3_AWS_BUCKET_NAME: pelican-backups
+        S3_BACKUPS_FILENAME_PREFIX: pelican-local-env-s3
