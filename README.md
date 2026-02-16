@@ -165,3 +165,52 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 ```bash
 kubectl top pods --namespace local
 ```
+
+## Обновление зависимостей инфраструктуры
+
+Время от времени возникает необходимость обновить версии kind, k8s, helm и helmfile в нашем контейнере разработки. Версии этих зависимостей должны быть согласованы и совместимы друг с другом. Пожалуйста, выполните следующие шаги, чтобы это сделать правильно:
+
+- Перейдите на домашнюю страницу kind: https://kind.sigs.k8s.io/ и проверьте текущую версию. Например, на момент написания документации это была версия `v0.29.0`.
+
+- Перейдите на страницу релизов kind и найдите конкретный релиз, в данном случае URL-адрес был https://github.com/kubernetes-sigs/kind/releases/tag/v0.29.0.
+
+- В разделе «Предварительно собранные образы для этого релиза» найдите самую новую поддерживаемую версию k8s, в данном случае это `v1.33.1`.
+
+— Перейдите на страницу Helm Supported Version Skew здесь: https://helm.sh/docs/topics/version_skew/, чтобы проверить последнюю версию Helm, которая поддерживает нашу версию Kubernetes `v1.33.1`. В данном случае на странице было указано, что поддерживаемые версии Kubernetes — 1.33.x - 1.30.x, а их версия Helm — 3.18.x.
+
+— Теперь нам нужно найти последнюю версию Helmfile, которая поддерживает версию Helm 3.18.x. Перейдите на страницу релизов Helmfile здесь: https://github.com/helmfile/helmfile/releases. В данном случае последняя версия — `v1.1.3`, и она поддерживает версию Helm v3.18.3. Хотя последняя версия Helm — v3.18.4, мы не могли её использовать, потому что Helmfile её ещё не поддерживал.
+
+
+Вот как будут выглядеть измененные параметры файла `.devcontainer/devcontainer.json`:
+
+```json
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1.1.9": {
+			"version": "1.33.1",
+			"helm": "3.18.3",
+			"minikube": "none"
+		},
+		"ghcr.io/mpriscella/features/kind:1.0.1": {
+			"version": "v0.29.0"
+		},
+		"ghcr.io/schlich/devcontainer-features/helmfile:1.0.0": {
+			"version": "v1.1.3"
+		},
+```
+
+Иногда также возникает необходимость обновить версию Docker. Например, во время инициализации локальной среды devcontainers у нас возникла следующая ошибка:
+
+```bash
+Error response from daemon: client version 1.41 is too old. Minimum supported API version is 1.44, please upgrade your client to a newer version
+```
+
+Перейдите на домашнюю страницу Docker здесь https://docs.docker.com/engine/release-notes/29/ и проверьте текущую версию. Например, на момент написания документации это была версия `v29.2.1`.
+
+Вот как будут выглядеть измененные функции файла `.devcontainer/devcontainer.json`:
+
+```json
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1.4.5": {
+			"version": "29.2.1",
+			"enableNonRootDocker": "true",
+			"moby": "true"
+		},
+```
