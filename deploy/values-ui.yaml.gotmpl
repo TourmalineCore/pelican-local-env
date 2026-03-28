@@ -4,7 +4,13 @@ image:
   tag: "local-env-latest"
 
 extraConfigMapEnvVars:
+  CMS_URL: "http://pelican-cms-nginx:40110"
   API_URL: "http://pelican-cms-nginx:40110/api"
+  FRONTEND_URL: "{{ .Values.baseExternalUrl }}"
+
+  CMS_EMAIL: "{{ .Values.PELICAN_CMS_EMAIL }}"
+  CMS_PASSWORD: "{{ .Values.PELICAN_CMS_PASSWORD }}"
+
   PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}"
 
   CSP_ENABLED: "{{ .Values.PELICAN_CSP_ENABLED }}"
