@@ -42,7 +42,7 @@ extraConfigMapEnvVars:
 
 initContainers:
   - name: create-bucket
-    image: minio/mc
+    image: bitnamilegacy/minio-client
     command: ["/bin/sh", "-c"]
     args:
       - |
